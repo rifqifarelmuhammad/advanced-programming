@@ -1,0 +1,5 @@
+rootProject.name = 'tutorial-8'
+
+include('service-registry')
+include('article-service')
+include('comment-service')

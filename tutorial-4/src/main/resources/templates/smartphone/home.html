@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Cek Spesifikasi HP</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 w-screen h-full grid place-items-center m-4">
+<div class="max-w-screen-md w-full p-8 text-center bg-white rounded-lg shadow">
+    <h1 class="font-bold text-4xl mb-4">Smartphone Specification</h1>
+    <h4 class="mb-4 text-gray-500">
+        Select your smartphone brand and check the specification.
+    </h4>
+    <form th:action="@{/smartphone}" method="GET" class="flex flex-col gap-4">
+        <div class="form-group grid grid-cols-3 gap-4">
+            <div class="col-span-2 relative">
+                <select class="block appearance-none w-full bg-gray-100 border-2 border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
+                        name="brandInput">
+                    <option>Select Brand</option>
+                    <option th:each="brand : ${brands}"
+                            th:value="${brand}"
+                            th:text="${brand}">
+                    </option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                    </svg>
+                </div>
+            </div>
+            <button type="submit" class="bg-blue-500 rounded-md hover:bg-blue-600 text-white text-bold cursor-pointer transition px-4 py-2">
+                Check
+            </button>
+        </div>
+    </form>
+
+    <div th:if="${smartPhone != null}" class="mt-10">
+        <p th:text="${smartPhone.getName()}" class="font-bold text-2xl"></p>
+        <p th:text="'Price: Rp' + ${#strings.substringBefore(smartPhone.getPrice(), '.0')} + ',00'" class="text-gray-500"></p>
+        <table class="w-full border-collapse mb-2 mt-6">
+            <tr class="bg-blue-500 text-white p-2 w-48 border border-white">
+                <th class="p-2">Component</th>
+                <th class="p-2">Name</th>
+                <th class="p-2">Detail</th>
+            </tr>
+            <tr>
+                <th class="font-bold p-2 w-48 border">Processor</th>
+                <td class="p-4 border">
+                        <span th:class="${smartPhone.getProcessor().getName() == 'SnackDragon'
+                                ? 'inline-flex items-center gap-1 rounded-full px-2 py-1 text-m font-semibold bg-green-50 text-green-600'
+                                : 'inline-flex items-center gap-1 rounded-full px-2 py-1 text-m font-semibold bg-red-50 text-red-600'}"
+                              th:classappend="${smartPhone.getProcessor().getName() == 'ExyYes'
+                                ? 'bg-yellow-50 text-yellow-600'
+                                : ''}"
+                              th:text="${smartPhone.getProcessor().getName()}">
+                            <span th:class="${smartPhone.getProcessor().getName() == 'SnackDragon'
+                                    ? 'h-1.5 w-1.5 rounded-full bg-green-600'
+                                    : 'h-1.5 w-1.5 rounded-full bg-red-600'}"
+                                  th:classappend="${smartPhone.getProcessor().getName() == 'ExyYes'
+                                    ? 'bg-yellow-600'
+                                    : ''}"></span>
+                                Name
+                        </span>
+                </td>
+                <td th:text="${smartPhone.getProcessor().getSpeed()} + ' Ghz'" class="p-4 border"></td>
+            </tr>
+            <tr>
+                <th class="font-bold p-2 w-48 border">Screen</th>
+                <td class="p-4 border">
+                        <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-m font-semibold"
+                              th:classappend="${smartPhone.getScreen().getName() == 'Alomed'
+                                ? 'bg-green-50 text-green-600'
+                                : 'bg-red-50 text-red-600'}"
+                              th:text="${smartPhone.getScreen().getName()}">
+                            <span class="h-1.5 w-1.5 rounded-full"
+                                  th:classappend="${smartPhone.getScreen().getName() == 'Alomed'
+                                    ? 'bg-green-600'
+                                    : 'bg-red-600'}"></span>
+                                Name
+                        </span>
+                </td>
+                <td th:text="${smartPhone.getScreen().getRefreshRate()} + ' Hz'" class="p-4 border"></td>
+            </tr>
+            <tr>
+                <th class="font-bold p-2 w-48 border">RAM</th>
+                <td class="p-4 border">
+                        <span class="inline-flex items-center gap-1 rounded-full px-2 py-1 text-m font-semibold"
+                              th:classappend="${smartPhone.getRAM().getName() == 'SeRAM'
+                                ? 'bg-green-50 text-green-600'
+                                : 'bg-red-50 text-red-600'}"
+                              th:text="${smartPhone.getRAM().getName()}">
+                            <span class="h-1.5 w-1.5 rounded-full"
+                                  th:classappend="${smartPhone.getRAM().getName() == 'SeRAM'
+                                    ? 'bg-green-600'
+                                    : 'bg-red-600'}"></span>
+                                Name
+                        </span>
+                </td>
+                <td th:text="${smartPhone.getRAM().getSize()} + ' GB'" class="p-4 border"></td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+</body>
+
+</html>

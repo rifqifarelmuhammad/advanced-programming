@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Control Panel</title>
+
+    <!-- Bootstrap -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+            crossorigin="anonymous"
+    />
+    <script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+            crossorigin="anonymous"
+    ></script>
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+            integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+            crossorigin="anonymous"
+    ></script>
+</head>
+<body style="background-color: rgb(243 244 246)">
+<div class="container-fluid mt-4">
+    <div>
+        <h1 class="text-center">Control Panel</h1>
+    </div>
+    <div class="row d-flex justify-content-center mt-4">
+        <div class="col col-lg-4 col-md-6 col-sm-6">
+            <div class="rounded-3 p-4" style="background-color: white">
+                <h2 class="text-center">Devices</h2>
+                <p th:unless="${devices.ac.enable or devices.lamp.enable or devices.screen.enable}" class="text-center"><i class="text-body-tertiary">Empty</i></p>
+                <div class="device mb-3" th:if="${devices.ac.enable}">
+                    <div
+                            class="d-flex justify-content-between rounded-pill bg-primary p-2 ps-4 pe-4 text-white"
+                    >
+                        <h5 class="m-0">AC</h5>
+                        <h5 class="m-0" th:text="'STATE: ' +  ${devices.ac.state}"></h5>
+                    </div>
+                    <div class="d-flex justify-content-center mt-1">
+                        <div class="btn-group gap-1">
+                            <a th:href="@{/cinema-admin/control-panel/ACOFF}" class="btn rounded-3 btn-sm btn-outline-secondary">OFF</a>
+                            <a th:href="@{/cinema-admin/control-panel/ACLOW}" class="btn rounded-3 btn-sm btn-outline-secondary">LOW</a>
+                            <a th:href="@{/cinema-admin/control-panel/ACMEDIUM}" class="btn rounded-3 btn-sm btn-outline-secondary">MED</a>
+                            <a th:href="@{/cinema-admin/control-panel/ACHIGH}" class="btn rounded-3 btn-sm btn-outline-secondary">HIGH</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="device mb-3" th:if="${devices.lamp.enable}">
+                    <div
+                            class="d-flex justify-content-between rounded-pill bg-primary p-2 ps-4 pe-4 text-white"
+                    >
+                        <h5 class="m-0">Lamp</h5>
+                        <h5 class="m-0" th:text="'STATE: ' +  ${devices.lamp.state}"></h5>
+                    </div>
+                    <div class="d-flex justify-content-center mt-1">
+                        <div class="btn-group gap-1">
+                            <a th:href="@{/cinema-admin/control-panel/LampOFF}" class="btn rounded-3 btn-sm btn-outline-secondary">OFF</a>
+                            <a th:href="@{/cinema-admin/control-panel/LampON}" class="btn rounded-3 btn-sm btn-outline-secondary">ON</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="device mb-3" th:if="${devices.screen.enable}">
+                    <div
+                            class="d-flex justify-content-between rounded-pill bg-primary p-2 ps-4 pe-4 text-white"
+                    >
+                        <h5 class="m-0">Screen</h5>
+                        <h5 class="m-0" th:text="'STATE: ' +  ${devices.screen.state}"></h5>
+                    </div>
+                    <div class="d-flex justify-content-center mt-1">
+                        <div class="btn-group gap-1">
+                            <a th:href="@{/cinema-admin/control-panel/ScreenOFF}" class="btn rounded-3 btn-sm btn-outline-secondary">OFF</a>
+                            <a th:href="@{/cinema-admin/control-panel/ScreenADS}" class="btn rounded-3 btn-sm btn-outline-secondary">ADS</a>
+                            <a th:href="@{/cinema-admin/control-panel/ScreenFILM}" class="btn rounded-3 btn-sm btn-outline-secondary">FILM</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col col-lg-4 col-md-6 col-sm-6">
+            <div class="rounded-3 p-4" style="background-color: white">
+                <h2 class="text-center">History</h2>
+                <p th:if="${history.size() == 0}" class="text-center"><i class="text-body-tertiary">Empty</i></p>
+                <ul th:each="h : ${history}" class="list-group list-group-flush">
+                    <li th:text="${h}" class="list-group-item">a</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-4 mb-4">
+        <a href="/cinema-admin/enable-device">Enable device</a>
+    </div>
+</div>
+</body>
+</html>

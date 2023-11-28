@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Belanjaa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="flex flex-wrap justify-evenly p-4">
+  <div class="w-full md:w-1/2 px-4 mb-4">
+    <h1 class="text-3xl font-bold mb-4">Belanjaa's Information</h1>
+    <div>
+      <h2 class="text-xl font-bold mb-2">Items</h2>
+      <ul class="list-disc pl-4">
+        <li th:each="item : ${items}">
+          <p><strong>Name:</strong> <span th:text="${item.getName()}">Baju</span></p>
+          <p><strong>Price:</strong> <span th:text="${item.getPrice()}">25.000</span></p>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-xl font-bold my-2">Coupons</h2>
+      <ul class="list-disc pl-4">
+        <li th:each="coupon : ${coupons}">
+          <p><strong>Coupon Id:</strong> <span th:text="${coupon.getCode()}">asdasxcxa1123s</span></p>
+          <p><strong>Balance:</strong> <span th:text="${coupon.getBalance()}">25.000</span></p>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-xl font-bold my-2">Gifts</h2>
+      <ul class="list-disc pl-4">
+        <li th:each="gift : ${gifts}">
+          <p><strong>Gift Id:</strong> <span th:text="${gift.getCode()}">asdasxcxa1123s</span></p>
+          <p><strong>Target Item:</strong> <span th:text="${gift.getItemGiftName()}">Baju</span></p>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-xl font-bold my-2">Belanjaa Pay</h2>
+      <ul class="list-disc pl-4">
+        <li th:each="payment : ${payments}">
+          <p><strong>Belanjaa Pay Id:</strong> <span th:text="${payment.getBelanjaaPayId()}">asdasxcxa1123s</span></p>
+          <p><strong>Balance:</strong> <span th:text="${payment.getBalance()}">25.000</span></p>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="w-full md:w-1/2 px-4 flex flex-col gap-3">
+    <form class="w-full px-4 flex flex-col gap-3">
+      <h1 class="text-3xl font-bold mb-4">Belanjaa's Payment</h1>
+      <div class="flex flex-col">
+        <label for="item" class="mb-2 font-bold">Item</label>
+        <select id="item" name="item" class="border py-2 px-4">
+          <option th:each="item : ${items}" th:text="${item.getName()}" th:value="${item.getName()}"></option>
+        </select>
+      </div>
+      <div class="flex flex-col">
+        <label for="code" class="mb-2 font-bold">Payment Id</label>
+        <input id="code" name="code" class="border" type="text" />
+      </div>
+      <button type="submit"
+        class="bg-indigo-500 text-white font-medium rounded-md px-4 py-2 hover:bg-indigo-600 transition-colors">Pay</button>
+    </form>
+    <div class="w-full px-4 flex flex-col gap-3">
+      <h2 class="text-xl font-bold my-2">Payment Log</h2>
+      <p th:text="${log}" class="text-gray-500 text-sm mt-4 max-w-md mx-auto"></p>
+    </div>
+  </div>
+</body>
+
+</html>
